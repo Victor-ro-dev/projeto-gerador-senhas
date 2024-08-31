@@ -24,6 +24,41 @@ numeros = '0123456789'
 simbolos ='.,;!@#$&*'
 
 #---------------------------Configs básicas------------------
+def criar_senha():
+    combinar = "" 
+    
+    if estado_1.get() == alfa_maior:
+        combinar += alfa_maior  
+    if estado_2.get() == alfa_menor:
+        combinar += alfa_menor 
+    if estado_3.get() == numeros:
+        combinar += numeros  
+    if estado_4.get() == simbolos:
+        combinar += simbolos  
+
+    
+    if combinar:
+        tamanho = int(spin.get())
+        senha = "".join(random.sample(combinar, tamanho))
+        app_senha['text'] = senha
+    else:
+        app_senha['text'] = "Selecione uma opção!"
+        senha = "- - -"
+
+    def copiar_senha():
+        info = senha
+        frame_baixo.clipboard_clear()
+        frame_baixo.clipboard_append(info)
+
+        if senha in '- - -':
+            messagebox.showinfo('Atenção', "Marque alguma das opções!")
+        else:
+            messagebox.showinfo('Sucesso', "A Senha foi copiada com sucesso!")
+
+    botao_copiar = Button(frame_baixo, command=copiar_senha, width=5, height=1, text='Copiar', relief='raised', overrelief='solid', anchor='center', bg=cor2, fg=cor1, font='Ivy 10 bold')
+    botao_copiar.grid(row = 0, column=1, sticky=NW, padx=10, pady=15, columnspan=1)
+
+#---------------------------Funções--------------------------
 
 frame_cima = Frame(janela,width=300, height=50, bg = cor2, padx=0, pady=0, relief='flat')
 frame_cima.grid(row = 0, column=0, sticky=NSEW)
@@ -94,7 +129,10 @@ check_4.grid(row = 3, column=0, sticky=NW, padx=2, pady=5)
 info_check4 = Label(frame_caracteres,width=26, height=1, text='Símbolos ([]{}()*;/_-)', padx=0, relief='flat',anchor='nw', bg=cor2, fg=cor1, font='ivy 10 bold')
 info_check4.grid(row =3, column=1, sticky=NW, padx=2, pady=7)
 
+#-------------------Corpo do programa-------------
 
+botao_gerar = Button(frame_caracteres,command=criar_senha, width=35, height=1, text='Gerar Senha', relief='flat', overrelief='solid', anchor='center', bg=cor3, fg=cor2, font='ivy 10 bold')
+botao_gerar.grid(row = 5, column=0, sticky=NS, padx=5, pady=5, columnspan=5)
 
 
 estilo = ttk.Style(janela)
